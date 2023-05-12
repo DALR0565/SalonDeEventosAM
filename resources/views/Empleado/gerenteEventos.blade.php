@@ -68,39 +68,55 @@
 </style>
 
 <div class="table-container">
-    <h1 class="heading">Usuarios registrados</h1>
-    {{--@dump($usuarios)--}}
+    <h1 class="heading">Eventos registrados</h1>
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Sexo</th>
-                <th>Correo electronico</th>
-                <th>Clave</th>
-                <th>Telefono</th>
-                <th>Rol del usuario</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Hora de inicio</th>
+                <th>Hora de cierre</th>
+                <th>Invitados</th>
+                <th>Confirmacion</th>
+                <th>Detalles</th>
+                <th>Paquete</th>
+                <th>Servicios</th>
+                <th>Usuario</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         
-        @foreach($usuarios as $usuario)         {{-- Recorremos los arreglos creados en el arreglo--}}
-            @if(!empty($usuario))               {{-- Verificamos que el array no este vacio--}}
+        @foreach($eventos as $evento)         {{-- Recorremos los arreglos creados en el arreglo--}}
+            @if(!empty($evento))               {{-- Verificamos que el array no este vacio--}}
             <tr>
-                <td>{{$usuario->id}}</td>
-                <td>{{$usuario->nombres}}</td>
-                <td>{{$usuario->apellidos}}</td>
-                <td>{{$usuario->edad}}</td>
-                <td>{{$usuario->sexo}}</td>
-                <td>{{$usuario->correo}}</td>
-                <td>{{$usuario->clave}}</td>
-                <td>{{$usuario->telefono}}</td>
-                <td>{{$usuario->rol}}</td>
-                <td><a href="{{route('usuarios.edit', $usuario->id)}}" class="btn">Actualizar</a>
-                <form action="{{route('usuarios.destroy', $usuario->id)}}" method="post">
+                <td>{{$evento->id}}</td>
+                <td>{{$evento->nombre}}</td>
+                <td>{{$evento->fecha}}</td>
+                <td>{{$evento->hora_de_inicio}}</td>
+                <td>{{$evento->hora_de_cierre}}</td>
+                <td>{{$evento->numero_de_invitados}}</td>
+                @if($evento->confirmacion == "Pendiente")
+                <td>{{$evento->confirmacion}} <br><br><button class="btn">Confirmar</button></td>
+                @else
+                <td>{{$evento->confirmacion}} <br><br><button class="btn">Pendiente</button></td>
+                @endif
+                
+                <td>{{$evento->detalles}}</td>
+                
+                <td>{{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</td>
+
+                <td>@foreach($evento->servicio as $servicio)
+                    {{$servicio->nombre}}
+                    <br>
+                    @endforeach
+                </td>
+                
+                <td>{{(\App\Models\Usuario::find($evento->usuario_id))->nombres}}</td>
+                
+                <td><a href="{{route('eventos.edit', $evento->id)}}" class="btn">Actualizar</a>
+                <form action="{{route('eventos.destroy', $evento->id)}}" method="post">
                             @method('DELETE')
                             @csrf
                             <input class="btn" type="submit" value="BORRAR">
@@ -111,6 +127,6 @@
             @endforeach
         </tbody>
     </table>
-    <a class="btn" href="{{route('usuarios.create')}}">Agregar nuevo usuario</a>
+    <a class="btn" href="{{route('eventos.create')}}">Agregar nuevo evento</a>
     </div>
 @endsection

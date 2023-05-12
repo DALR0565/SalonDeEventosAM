@@ -13,7 +13,20 @@ class Evento extends Model
         return $this->belongsTo('App\Models\Paquete');
     }
     
+    public function servicio(){
+        return $this->belongsToMany('App\Models\Servicio');
+    }
+
     public function usuario(){
         return $this->belongsTo('App\Models\Usuario');
+    }
+
+    public function existe($array,$id){
+        foreach($array as $elemento){
+            if($elemento->id == $id){
+                return true;
+            }
+        }
+        return false;
     }
 }

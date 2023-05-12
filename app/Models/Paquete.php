@@ -12,9 +12,9 @@ class Paquete extends Model
         return $this->HasMany('App\Models\Evento');
     }
 
-    public function servicio(){
+    /*public function servicio(){
         return $this->belongsToMany('App\Models\Servicio');
-    }
+    }*/
     
     use HasFactory;
     

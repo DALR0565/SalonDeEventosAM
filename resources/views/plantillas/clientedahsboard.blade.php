@@ -22,14 +22,13 @@
     <div class="d-flex">
         <div id="sidebar-container" class="bg-primary">
             <div class="logo">
-                <h4 class="text-light">Gerente</h4>
+                <h4 class="text-light">Hola {{Auth::user()->nombres}}</h4>
             </div>
             <div class="menu">
-                <h3 class="d-block text-light p-3">Tablero</h3>
-                <a href="{{route('usuarios.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Usuarios</a>
-                <a href="{{route('paquetes.index')}}" class="d-block text-light p-3"><i class="icon ion-md-calendar mr-2 lead"></i>Paquetes</a>
-                <a href="{{route('servicios.index')}}" class="d-block text-light p-3"><i class="icon ion-md-clipboard mr-2 lead"></i>Servicios</a>
-                <a href="{{route('eventos.index')}}" class="d-block text-light p-3"><i class="icon ion-md-clipboard mr-2 lead"></i>Eventos</a>
+                <h3 class="d-block text-light p-3">Dashboard</h3>
+                <a href="{{route('miseventos')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Mis eventos</a>
+                <a href="{{route('miseventos')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Contratar evento</a>
+                <a href="{{route('inicio')}}" class="d-block text-light p-3"><i class="icon ion-md-exit mr-2 lead"></i>Inicio</a>
                 <a href="{{route('cerrarsesion')}}" class="d-block text-light p-3"><i class="icon ion-md-exit mr-2 lead"></i>Cerrar sesion</a>
             </div>
         </div>

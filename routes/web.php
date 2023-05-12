@@ -38,39 +38,39 @@ Route::get('cerrarSesion', [LoginController::class,'cerrarSesion'])->name('cerra
 
 
 
-Route::get('gerenteServicios',function(){
+/*Route::get('gerenteServicios',function(){
     return view('Empleado.gerenteServicios');
 })->name('gerenteServicios');
 
 Route::get('gerentePaquetes',function(){
     return view('Empleado.gerentePaquetes');
-})->name('gerentePaquetes');
+})->name('gerentePaquetes');*/
+
+
+Route::get('miseventos',function(){
+    return view('Cliente.clienteEventos');
+})->name('miseventos')->middleware('auth');
 /*
 Route::get('usuarios',[UsuarioController::class, 'index'])->name('Empleado.gerenteUsuarios');
 Route::get('paquetes',[PaqueteController::class, 'index'])->name('Empleado.gerentePaquetes');
 Route::get('servicios',[ServicioController::class, 'index'])->name('Empleado.gerenteServicios');
 */
-Route::get('abonos',[AbonoController::class, 'index'])->name('Empleado.empleadoAbonos');
-Route::get('eventos',[EventoController::class, 'index'])->name('Cliente.clienteEventos');
+//Route::get('abonos',[AbonoController::class, 'index'])->name('Empleado.empleadoAbonos');
+//Route::get('eventos',[EventoController::class, 'index'])->name('Cliente.clienteEventos');
 
 
 
-//RUTAS DE GERENTE - USUARIOS
+//RUTAS RECURSO DE GERENTE - USUARIOS
 Route::resource('usuarios',UsuarioController::class);
 
-//RUTAS DE GERENTE - PAQUETES
+//RUTAS RECURSO DE GERENTE - PAQUETES
 Route::resource('paquetes',PaqueteController::class);
 
-//RUTAS DE GERENTE - SERVICIOS
+//RUTAS RECURSO DE GERENTE - SERVICIOS
 Route::resource('servicios',ServicioController::class);
 
 
-//RUTAS DE CLIENTE - EVENTOS
-/*Route::get('actualizarevento/{cual?}',[EventoController::class, 'edit'])->name('eventos.edit');
-Route::post('guardarevento',[EventoController::class, 'store'])->name('eventos.store');
-Route::get('crearevento',[EventoController::class, 'create'])->name('eventos.create');
-Route::put('actualizarevento/{cual?}',[EventoController::class, 'update'])->name('eventos.update');
-Route::delete('borrarevento/{cual?}',[EventoController::class, 'destroy'])->name('eventos.destroy');*/
+//RUTAS RECURSO DE CLIENTE - EVENTOS
 Route::resource('eventos',EventoController::class);
 
 //RUTAS DE EMPLEADO - ABONOS

@@ -8,8 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Servicio extends Model
 {
-    public function paquete(){
+    /*public function paquete(){
         return $this->belongsToMany('App\Models\Paquete');
+    }*/
+
+    public function evento(){
+        return $this->belongsToMany('App\Models\Evento');
     }
 
     use HasFactory;

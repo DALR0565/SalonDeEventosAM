@@ -16,25 +16,25 @@ class PaqueteSeeder extends Seeder
         $paquete = new Paquete();
         $paquete->nombre = "Bodas";
         $paquete->descripcion = "Este es el paquete de Bodas";
-        $paquete->precio = 150;
+        $paquete->precio = 3500;
         $paquete->save();
 
         $paquete = new Paquete();
         $paquete->nombre = "XV años";
         $paquete->descripcion = "Este es el paquete de XV años";
-        $paquete->precio = 250;
+        $paquete->precio = 2500;
         $paquete->save();
 
         $paquete = new Paquete();
         $paquete->nombre = "Fiesta infantil";
         $paquete->descripcion = "Este es el paquete de Fiesta infantil";
-        $paquete->precio = 120;
+        $paquete->precio = 1800;
         $paquete->save();
 
         $paquete = new Paquete();
         $paquete->nombre = "Bautizos";
         $paquete->descripcion = "Este es el paquete de Bautizos";
-        $paquete->precio = 320;
+        $paquete->precio = 2000;
         $paquete->save();
 
     }

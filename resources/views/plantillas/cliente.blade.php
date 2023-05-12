@@ -366,17 +366,17 @@ section{
     </div>
         <nav>
     <a href="{{route('inicio')}}" class="nav-link">Inicio</a>
-    @guest
-    <a href="{{route('login')}}" class="nav-link">Iniciar Sesión</a>
-    @else
-    <a href="{{route('cerrarsesion')}}" class="nav-link">Cerrar Sesión</a>
-    @endguest
     <a href="#Acerca" class="nav-link">Acerca de nosotros</a>
     <a href="#Contactanos" class="nav-link">Contactanos</a>
     @guest
     <a href="{{route('registrarse')}}" class="nav-link">Registrarse</a>
     @else
-    <a href="{{route('registrarse')}}" class="nav-link">Ver mis eventos</a>
+    <a href="{{route('miseventos')}}" class="nav-link">Ver mis eventos</a>
+    @endguest
+    @guest
+    <a href="{{route('login')}}" class="nav-link">Iniciar Sesión</a>
+    @else
+    <a href="{{route('cerrarsesion')}}" class="nav-link">Cerrar Sesión</a>
     @endguest
         </nav>
     </header>

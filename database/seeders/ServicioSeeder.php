@@ -15,19 +15,19 @@ class ServicioSeeder extends Seeder
     {
         $servicio = new Servicio();
         $servicio->nombre = "Mantelería";
-        $servicio->precio = 100;
+        $servicio->precio = 800;
         $servicio->detalles = "Este es el servicio de mantelería";
         $servicio->save();
 
         $servicio = new Servicio();
         $servicio->nombre = "Meseros";
-        $servicio->precio = 350;
+        $servicio->precio = 1500;
         $servicio->detalles = "Este es el servicio de meseros";
         $servicio->save();
 
         $servicio = new Servicio();
         $servicio->nombre = "Aire Acondicionado";
-        $servicio->precio = 200;
+        $servicio->precio = 500;
         $servicio->detalles = "Este es el servicio de aire acondicionado";
         $servicio->save();
     }
