@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Paquete extends Model
 {
-    public function evento(){
+    public function eventos(){
         return $this->HasMany('App\Models\Evento');
     }
 

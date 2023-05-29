@@ -5,6 +5,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaqueteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\AbonoController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\FotoController;
+use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\UsuarioController;
 
 use Illuminate\Support\Facades\Route;
@@ -22,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('plantillas.cliente');
-})->name('inicio')->middleware("web");
+})->name('inicio')->middleware("web")->middleware('midcliente');
 
 
 
@@ -36,6 +40,18 @@ Route::post('validarusuario',[LoginController::class,'validarUsuario'])->name('v
 Route::get('cerrarSesion', [LoginController::class,'cerrarSesion'])->name('cerrarsesion')->middleware('web'); //Cambiar por auth
 
 
+//Rutas home
+/*Route::get('gerentes',function(){
+    return view('Gerente.home');
+})->name('Gerentes.home');
+
+Route::get('empleados',function(){
+    return view('Empleado.home');
+})->name('Empleados.home');
+
+Route::get('clientes',function(){
+    return view('Cliente.home');
+})->name('Clientes.home');*/
 
 
 /*Route::get('gerenteServicios',function(){
@@ -63,15 +79,26 @@ Route::get('servicios',[ServicioController::class, 'index'])->name('Empleado.ger
 //RUTAS RECURSO DE GERENTE - USUARIOS
 Route::resource('usuarios',UsuarioController::class);
 
+//RUTAS RECURSO DE GERENTE - USUARIOS
+Route::resource('clientes',ClienteController::class)->middleware('auth');
+
+//RUTAS RECURSO DE GERENTE - USUARIOS
+Route::resource('empleados',EmpleadoController::class)->middleware('auth');
+
+//RUTAS RECURSO DE GERENTE - USUARIOS
+Route::resource('gerentes',GerenteController::class)->middleware('auth');
+
 //RUTAS RECURSO DE GERENTE - PAQUETES
-Route::resource('paquetes',PaqueteController::class);
+Route::resource('paquetes',PaqueteController::class)->middleware('auth');
 
 //RUTAS RECURSO DE GERENTE - SERVICIOS
-Route::resource('servicios',ServicioController::class);
+Route::resource('servicios',ServicioController::class)->middleware('auth');
 
 
 //RUTAS RECURSO DE CLIENTE - EVENTOS
 Route::resource('eventos',EventoController::class);
+Route::get('confirmacion/{cual?}',[EventoController::class, 'confirmar'])->name('eventos.confirmar');
+Route::get('pendiente/{cual?}',[EventoController::class, 'pendiente'])->name('eventos.pendiente');
 
 //RUTAS DE EMPLEADO - ABONOS
 Route::get('actualizarabono/{cual?}',[AbonoController::class, 'edit'])->name('abonos.edit');
@@ -81,21 +108,43 @@ Route::put('actualizarabono/{cual?}',[AbonoController::class, 'update'])->name('
 Route::delete('borrarabono/{cual?}',[AbonoController::class, 'destroy'])->name('abonos.destroy');
 //Route::resource('abonos',AbonoController::class);
 
+//RUTA RECURSO DE FOTOS
+Route::resource('eventos.fotos',FotoController::class);
 
 
+/*Route::get('gerente/clientes',function(){
+    return view();
+})->name('gerente_clientes');
+
+Route::get('gerente/gerentes',function(){
+    return view();
+})->name('gerente_gerentes');
+
+Route::get('gerente/empleados',function(){
+    return view();
+})->name('gerente_empleados');
+
+Route::get('gerente/paquetes',function(){
+    return view();
+})->name('gerente_paquetes');
+
+Route::get('gerente/servicios',function(){
+    return view();
+})->name('gerente_servicios');
+
+Route::get('gerente/eventos',function(){
+    return view();
+})->name('gerente_eventos');
+*/
 //Rutas de los usuarios
-/*Route::get('gerente',function(){
+Route::get('gerente',function(){
     return view('plantillas.gerente');
-})->name('gerente');*/
+})->name('gerentes')->middleware('auth');
 
 Route::get('empleado',function(){
     return view('plantillas.empleado');
-})->name('empleado');
-
-Route::get('anonimo',function(){
-    return view('plantillas.anonimo');
-})->name('anonimo');
+})->name('empleados');
 
 Route::get('cliente',function(){
     return view('plantillas.cliente');
-})->name('cliente');
+})->name('clientes');

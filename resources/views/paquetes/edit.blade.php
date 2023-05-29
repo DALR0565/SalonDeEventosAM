@@ -1,6 +1,7 @@
 @extends('plantillas.gerente')
 @section('contenido')
-<form action="{{route('paquetes.update', $paquete->id)}}" method="post">
+@can('update',paquete)
+<form action="{{route('paquetes.update', $paquete)}}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <label for='nombre'>Nombre del paquete</label>
@@ -14,4 +15,5 @@
     <br>
     <input type="submit" value="Actualizar">
 </form>
+@endcan
 @endsection

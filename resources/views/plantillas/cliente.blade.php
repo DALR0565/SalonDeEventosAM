@@ -401,7 +401,7 @@ section{
 
     <div class="card">
         <div class="face front">
-            <img src="../img/bautizo.jpg" alt="">
+        <img src="{{asset("imagenes/$paquete->imagen")}}" alt="">
             <h3>{{$paquete->nombre}}</h3>
         </div>
 

@@ -30,6 +30,17 @@ return [
 
     'disks' => [
 
+        'publico' => [
+            'driver' => 'local',
+            'root' => public_path('imagenes'),
+            'throw' => false,
+        ],
+        'privado' => [
+            'driver' => 'local',
+            'root' => storage_path('app/fotos'),
+            'throw' => false,
+        ],
+        
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

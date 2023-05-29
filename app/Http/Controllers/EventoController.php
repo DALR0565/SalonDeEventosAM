@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Evento;
 use App\Http\Requests\StoreEventoRequest;
 use App\Http\Requests\UpdateEventoRequest;
+use App\Models\Cliente;
+use App\Models\Gerente;
 use App\Models\Servicio;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +18,14 @@ class EventoController extends Controller
     public function index()
     {
         $eventos = Evento::all();
-        return view('Empleado.gerenteEventos',compact('eventos'));
+        if(Auth::user() instanceof Cliente){
+            return redirect(route('miseventos'));
+        }else if(Auth::user() instanceof Gerente){
+            return view('Gerente.gerenteEventos',compact('eventos'));
+        }else{
+            //abort(404);
+        }
+        //return view('Gerente.gerenteEventos',compact('eventos'));
     }
 
     /**
@@ -32,6 +41,7 @@ class EventoController extends Controller
      */
     public function store(StoreEventoRequest $request)
     {
+        $this->authorize('create',Evento::class);
         $evento = new Evento();
         $evento->nombre = $request->input('nombre');
         $evento->fecha = $request->input('fecha');
@@ -41,14 +51,14 @@ class EventoController extends Controller
         $evento->confirmacion = "Pendiente";
         $evento->detalles = $request->input('detalles');
         $evento->paquete_id = $request->input('paquete_id');
-        $evento->usuario_id = Auth::user()->id;
+        $evento->cliente_id = Auth::user()->id;
         
         $evento->save();
 
         //Llenamos la tabla de paquete eventos.
         
         $arrayID = $request->input('servicio_id');
-        $evento->servicio()->attach($arrayID);
+        $evento->servicios()->attach($arrayID);
         
         return redirect(route('eventos.index'));
     }
@@ -74,6 +84,7 @@ class EventoController extends Controller
      */
     public function update(UpdateEventoRequest $request, Evento $evento)
     {
+        $this->authorize('update', $evento);
         //Lo que queramos mantener su valor simplemente lo comentamos
         $evento->nombre = $request->input('nombre');
         $evento->fecha = $request->input('fecha');
@@ -83,17 +94,18 @@ class EventoController extends Controller
         //$evento->confirmacion = "Pendiente"; Mantiene su valor
         $evento->detalles = $request->input('detalles');
         $evento->paquete_id = $request->input('paquete_id');
-        //$evento->usuario_id = Auth::user()->id; Mantiene su valor
+        //$evento->cliente_id = Auth::user()->id; Mantiene su valor
         $evento->save();
 
         //Primero eliminamos los servicios que se tienen actualmente
-        foreach($evento->servicio as $servicio){
-            $evento->servicio()->detach($servicio->id);
+        foreach($evento->servicioS as $servicio){
+            $evento->servicios()->detach($servicio->id);
         }
         //Despues se colocan los nuevos servicios
         $arrayID = $request->input('servicio_id');
-        $evento->servicio()->attach($arrayID);
+        $evento->servicios()->attach($arrayID);
 
+        
         return redirect(route('eventos.index'));
     }
 
@@ -102,7 +114,24 @@ class EventoController extends Controller
      */
     public function destroy(Evento $evento)
     {
+        $this->authorize('delete',$evento);
         $evento->delete();
         return redirect(route('eventos.index'));
     }
+
+
+    public function confirmar($id){
+        $evento = Evento::find($id);
+        $evento->confirmacion = "Confirmado";
+        $evento->save();
+        return redirect(route('eventos.index'));
+    }
+
+    public function pendiente($id){
+        $evento = Evento::find($id);
+        $evento->confirmacion = "Pendiente";
+        $evento->save();
+        return redirect(route('eventos.index'));
+    }
+
 }

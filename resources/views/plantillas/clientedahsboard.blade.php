@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gerente</title>
+    <title>Mis eventos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
@@ -27,7 +27,9 @@
             <div class="menu">
                 <h3 class="d-block text-light p-3">Dashboard</h3>
                 <a href="{{route('miseventos')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Mis eventos</a>
-                <a href="{{route('miseventos')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Contratar evento</a>
+                @can('create', App\Models\Evento::class)
+                <a href="{{route('eventos.create')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Contratar evento</a>
+                @endcan
                 <a href="{{route('inicio')}}" class="d-block text-light p-3"><i class="icon ion-md-exit mr-2 lead"></i>Inicio</a>
                 <a href="{{route('cerrarsesion')}}" class="d-block text-light p-3"><i class="icon ion-md-exit mr-2 lead"></i>Cerrar sesion</a>
             </div>

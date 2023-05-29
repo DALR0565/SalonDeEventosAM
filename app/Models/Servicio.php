@@ -12,7 +12,7 @@ class Servicio extends Model
         return $this->belongsToMany('App\Models\Paquete');
     }*/
 
-    public function evento(){
+    public function eventos(){
         return $this->belongsToMany('App\Models\Evento');
     }
 

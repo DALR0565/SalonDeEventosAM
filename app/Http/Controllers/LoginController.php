@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
+use App\Models\Empleado;
+use App\Models\Gerente;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,24 +22,54 @@ class LoginController extends Controller
         
         $correo= $request->input('correo');
         $clave= $request->input('clave');
-        $usuarioEncontrado = Usuario::where('correo',$correo)->first();
-        if( is_null($usuarioEncontrado) ){
-            return redirect()->back();
-        }else{
-            $claveUsuario = $usuarioEncontrado->clave;
-            $coincide = Hash::check($clave,$claveUsuario);
-            if($coincide){
-                Auth::guard('guard_usuario')->login($usuarioEncontrado);
-                $_SESSION['AuthGuard']= 'guard_usuario';
-                if($usuarioEncontrado->rol == "Gerente"){
-                    return redirect(route('usuarios.index'));
+        $usuarioEncontrado = Cliente::where('correo',$correo)->first();
+
+        if(is_null($usuarioEncontrado)){
+            $usuarioEncontrado = Gerente::where('correo',$correo)->first();
+            if(is_null($usuarioEncontrado)){
+                $usuarioEncontrado = Empleado::where('correo',$correo)->first();
+                if(is_null($usuarioEncontrado)){
+                    return redirect()->back();
+                    //USUARIO NO EXISTE
                 }else{
-                    return redirect('/');                   
+                    $claveEmpleado = $usuarioEncontrado->clave;
+                    $coincide = Hash::check($clave,$claveEmpleado);
+                    if($coincide){
+                        Auth::guard('guard_empleado')->login( $usuarioEncontrado );
+                        $_SESSION['AuthGuard']= 'guard_empleado';
+                        return redirect(route('empleados'));
+                    }else{
+                        return redirect()->back();
+                        //Retornar que la contrasena no coincide
+                    } 
                 }
+            }else{
+                $claveGerente = $usuarioEncontrado->clave;
+                $coincide = Hash::check($clave,$claveGerente);
+                if($coincide){
+                    Auth::guard('guard_gerente')->login( $usuarioEncontrado );
+                    $_SESSION['AuthGuard']= 'guard_gerente';
+                    return redirect(route('clientes.index'));
+                }else{
+                    return redirect()->back();
+                    //Retornar que la contrasena no coincide
+                } 
             }
+        }else{
+            $claveCliente = $usuarioEncontrado->clave;
+            $coincide = Hash::check($clave,$claveCliente);
+            if($coincide){
+                Auth::guard('guard_cliente')->login( $usuarioEncontrado );
+                $_SESSION['AuthGuard']= 'guard_cliente';
+                return redirect(route('inicio'));
+            }else{
+                return redirect()->back();
+                //Retornar que la contrasena no coincide
+            } 
         }
-        return redirect()->back()->with("Por favor verifique sus credenciales.");
     }
+
+
 
     public function cerrarSesion(){
         Auth::logout();

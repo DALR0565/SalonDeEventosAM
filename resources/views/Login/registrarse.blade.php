@@ -84,7 +84,7 @@
     </style>
 
 <body>
-    <form action="{{route('usuarios.store')}}" method="post">
+    <form action="{{route('clientes.store')}}" method="post">
     @csrf
     <section class="form-register">
         <h4> Formulario de registro de Salon A&M </h4>

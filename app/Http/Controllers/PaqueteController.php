@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paquete;
 use App\Http\Requests\StorePaqueteRequest;
 use App\Http\Requests\UpdatePaqueteRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PaqueteController extends Controller
 {
@@ -14,7 +15,13 @@ class PaqueteController extends Controller
     public function index()
     {
         $paquetes = Paquete::all();
-        return view('Empleado.gerentePaquetes',compact('paquetes'));
+        if(request()->expectsJson()){
+            return response()->json($paquetes);
+
+        }else{
+            return view('Gerente.gerentePaquetes',compact('paquetes'));
+        }
+        
     }
 
     /**
@@ -34,6 +41,14 @@ class PaqueteController extends Controller
         $paquete->nombre = $request->input('nombre');
         $paquete->descripcion = $request->input('descripcion');
         $paquete->precio = $request->input('precio');
+        //Validacion de la imagen
+        $request->validate([
+            'imagen' => 'required|image|max:2048'
+        ]);
+        $archivo = $request->file('imagen');
+        $nombreDelArchivo = $archivo->getClientOriginalName();
+        $imagen = Storage::disk('publico')->putFileAs('',$archivo,$nombreDelArchivo);
+        $paquete->imagen = $imagen;
         $paquete->save();
         return redirect(route('paquetes.index'));
     }
@@ -59,9 +74,18 @@ class PaqueteController extends Controller
      */
     public function update(UpdatePaqueteRequest $request, Paquete $paquete)
     {
+        $this->authorize($paquete);
         $paquete->nombre = $request->input('nombre');
         $paquete->descripcion = $request->input('descripcion');
         $paquete->precio = $request->input('precio');
+        
+        $request->validate([
+            'imagen' => 'required|image|max:2048'
+        ]);
+        $archivo = $request->file('imagen');
+        $nombreDelArchivo = $archivo->getClientOriginalName();
+        $imagen = Storage::disk('publico')->putFileAs('',$archivo,$nombreDelArchivo);
+        $paquete->imagen = $imagen;
         $paquete->save();
         return redirect(route('paquetes.index'));
     }
@@ -71,6 +95,7 @@ class PaqueteController extends Controller
      */
     public function destroy(Paquete $paquete)
     {
+        $this->authorize('delete',$paquete);
         $paquete->delete();
         return redirect(route('paquetes.index'));
     }

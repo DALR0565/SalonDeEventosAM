@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Cliente;
+use App\Models\Evento;
+use App\Models\Paquete;
+use App\Policies\ClientePolicy;
+use App\Policies\EventoPolicy;
+use App\Policies\PaquetePolicy;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -9,16 +15,15 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 
 class AuthServiceProvider extends ServiceProvider
 {
-    /*public function __construct(){
-        session_start();
-    }
-    /**
+    /*
      * The model to policy mappings for the application.
      *
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Evento::class => EventoPolicy::class,
+        Cliente::class => ClientePolicy::class,
+        Paquete::class => PaquetePolicy::class
     ];
 
     /**

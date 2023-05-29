@@ -25,7 +25,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Pendiente'; ///Checar el tipo de dato y cambiarlo
         $evento->detalles = "Esta es la fiesta de miguel";
         $evento->paquete_id = 1;
-        $evento->usuario_id = 2;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -37,7 +37,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Confirmado';
         $evento->detalles = "";
         $evento->paquete_id = 1;
-        $evento->usuario_id = 2;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -49,7 +49,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Confirmado';
         $evento->detalles = "";
         $evento->paquete_id = 2;
-        $evento->usuario_id = 3;
+        $evento->cliente_id = 3;
         $evento->save();
 
         $evento = new Evento();
@@ -61,7 +61,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Pendiente';
         $evento->detalles = "";
         $evento->paquete_id = 2;
-        $evento->usuario_id = 4;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -73,7 +73,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Confirmado';
         $evento->detalles = "";
         $evento->paquete_id = 3;
-        $evento->usuario_id = 4;
+        $evento->cliente_id = 3;
         $evento->save();
 
         $evento = new Evento();
@@ -85,7 +85,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Pendiente';
         $evento->detalles = "";
         $evento->paquete_id = 3;
-        $evento->usuario_id = 2;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -97,7 +97,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Pendiente';
         $evento->detalles = "";
         $evento->paquete_id = 4;
-        $evento->usuario_id = 2;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -109,7 +109,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Confirmado';
         $evento->detalles = "";
         $evento->paquete_id = 4;
-        $evento->usuario_id = 3;
+        $evento->cliente_id = 3;
         $evento->save();
 
         $evento = new Evento();
@@ -121,7 +121,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Confirmado';
         $evento->detalles = "";
         $evento->paquete_id = 1;
-        $evento->usuario_id = 2;
+        $evento->cliente_id = 2;
         $evento->save();
 
         $evento = new Evento();
@@ -133,7 +133,7 @@ class EventoSeeder extends Seeder
         $evento->confirmacion = 'Pendiente';
         $evento->detalles = "";
         $evento->paquete_id = 1;
-        $evento->usuario_id = 3;
+        $evento->cliente_id = 3;
         $evento->save();
 
     }

@@ -1,6 +1,7 @@
+@can('update', $evento)
 @extends('plantillas.clienteEventos')
 @section('contenido')
-<form action="{{route('eventos.update', $evento->id)}}" method="post" enctype="multipart/form-data">
+<form action="{{route('eventos.update', $evento)}}" method="post" enctype="multipart/form-data">
     @method('PUT')
     @csrf
   <label for="nombre">Nombre del evento:</label>
@@ -36,7 +37,7 @@
 @foreach((\App\Models\Servicio::all()) as $servicio)
   <div class="mb-4">
         <label>Servicio: </label>
-            @if($evento->existe($evento->servicio,$servicio->id))
+            @if($evento->es_contratado($evento->servicios,$servicio->id))
             <input type="checkbox" class="form-check-input"  name="servicio_id[]"  checked="checked" value="{{$servicio->id}}" >{{$servicio->nombre}}            
             @else
             <input type="checkbox" class="form-check-input"  name="servicio_id[]" value="{{$servicio->id}}" >{{$servicio->nombre}}
@@ -47,3 +48,49 @@
     <input type="submit" value="ACTUALIZAR">
 </form>
 @endsection
+@else
+<!DOCTYPE html>
+<html>
+<head>
+    <title>No tienes autorización</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #ff0000;
+        }
+
+        p {
+            color: #555555;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">❌</div>
+        <h2>No tienes autorización</h2>
+        <p>No tienes permiso para realizar esta acción.</p>
+    </div>
+</body>
+</html>
+
+@endcan

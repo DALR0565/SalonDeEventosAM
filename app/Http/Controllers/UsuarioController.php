@@ -41,12 +41,13 @@ class UsuarioController extends Controller
         $usuario->clave = Hash::make($request->input('clave'));
         $usuario->telefono = $request->input('telefono');
         $usuario->save();
-        $usuarioEncontrado = Usuario::where('correo',$usuario->correo)->first();
+        //$usuarioEncontrado = Usuario::where('correo',$usuario->correo)->first();
         //Se crea la session
-        Auth::guard('guard_usuario')->login($usuarioEncontrado);
+        Auth::guard('guard_usuario')->login($usuario);
         $_SESSION['AuthGuard']= 'guard_usuario';
         if($usuario->rol == "Gerente"){
-            return redirect(route('usuarios.index'));
+            return redirect(route('usuarios.i
+            ndex'));
         }else{
             return redirect(route('inicio'));
         }

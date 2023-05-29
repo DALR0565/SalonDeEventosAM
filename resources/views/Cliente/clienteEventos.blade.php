@@ -77,17 +77,31 @@
         
         <h1 class="subtitle">Confirmados</h1>
         <div class="container">
-        @foreach(Auth::user()->evento as $evento)
+        @foreach(Auth::user()->eventos as $evento)
         @if($evento->confirmacion == "Confirmado")
         <div class="card">
-            <img>
+        @php
+            $foto = $evento->fotos()->find(1);
+        @endphp
+            @if(!empty($evento->fotos()->find(1)))
+                <img src="{{asset("imagenes/$foto->imagen")}}" alt="">
+            @else
+                <img>
+            @endif
             <p>{{$evento->nombre}}</p>
             <p>Fecha: {{$evento->fecha}}<br>Hora de inicio: {{$evento->hora_de_inicio}}<br>Hora de cierre: {{$evento->hora_de_cierre}}</p>
             <p>Numero de invitados: {{$evento->numero_de_invitados}}</p>
             <p>Status: <FONT COLOR="green">{{$evento->confirmacion}} </FONT></p>
             <p>Detalles: {{$evento->detalles}}</p>
             <p>Paquete contratado: {{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</p>
-            <p>Servicios contratado: {{$evento->paquete_id}}</p>
+            <p>Servicios contratados: 
+                @foreach($evento->servicios as $servicio)
+                    {{$servicio->nombre}}
+                @endforeach
+            </p>
+            <p>
+                <a  href="{{route('eventos.fotos.index',$evento->id)}}">Galería de fotos</a>
+            </p>
         </div>
         @endif
         @endforeach
@@ -96,7 +110,7 @@
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <h1 class="subtitle">Pendientes</h1>
         <div class="container">
-        @foreach(Auth::user()->evento as $evento)
+        @foreach(Auth::user()->eventos as $evento)
         @if($evento->confirmacion == "Pendiente")
         <div class="card">
             <img>
@@ -106,8 +120,22 @@
             <p>Status: <FONT COLOR="red">{{$evento->confirmacion}} </FONT></p>
             <p>Detalles: {{$evento->detalles}}</p>
             <p>Paquete contratado: {{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</p>
-            <p>Servicios contratado: {{$evento->paquete_id}}</p>
-            <a href="">Modificar</a>
+            <p>Servicios contratados: 
+                @foreach($evento->servicios as $servicio)
+                    {{$servicio->nombre}}
+                    <br>
+                @endforeach
+            </p>
+            @can('update', $evento)
+            <a href="{{route('eventos.edit', $evento)}}">Modificar</a>
+            @endcan
+            @can('delete', $evento)
+            <form action="{{route('eventos.destroy', $evento)}}" method="post">
+                @method('DELETE')
+                @csrf
+                <input class="btn" type="submit" value="Eliminar">
+            </form>
+            @endcan
         </div>
         @endif
         @endforeach

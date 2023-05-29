@@ -1,5 +1,6 @@
 @extends('plantillas.clienteEventos')
 @section('contenido')
+@can('create',App\Models\Evento::class)
 <form action="{{route('eventos.store')}}" method="post" id="formulario">
 
   @csrf
@@ -37,5 +38,5 @@
 @endforeach
   <input type="submit" value="Guardar"> 
 </form>
-
+@endcan
 @endsection

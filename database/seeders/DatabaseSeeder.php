@@ -21,7 +21,11 @@ class DatabaseSeeder extends Seeder
         //Se inserta datos primero en las entidades fuertes.
         $this->call(PaqueteSeeder::class);
         $this->call(ServicioSeeder::class);
-        $this->call(UsuarioSeeder::class);
+        //$this->call(UsuarioSeeder::class);
+        $this->call(ClienteSeeder::class);
+        $this->call(GerenteSeeder::class);
         $this->call(EventoSeeder::class);
+        $this->call(AbonoSeeder::class);
+        $this->call(GastoSeeder::class);
     }
 }

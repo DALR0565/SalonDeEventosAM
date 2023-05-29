@@ -26,7 +26,9 @@
             </div>
             <div class="menu">
                 <h3 class="d-block text-light p-3">Tablero</h3>
-                <a href="{{route('usuarios.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Usuarios</a>
+                <a href="{{route('clientes.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Clientes</a>
+                <a href="{{route('gerentes.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Gerentes</a>
+                <a href="{{route('empleados.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Empleados</a>
                 <a href="{{route('paquetes.index')}}" class="d-block text-light p-3"><i class="icon ion-md-calendar mr-2 lead"></i>Paquetes</a>
                 <a href="{{route('servicios.index')}}" class="d-block text-light p-3"><i class="icon ion-md-clipboard mr-2 lead"></i>Servicios</a>
                 <a href="{{route('eventos.index')}}" class="d-block text-light p-3"><i class="icon ion-md-clipboard mr-2 lead"></i>Eventos</a>
