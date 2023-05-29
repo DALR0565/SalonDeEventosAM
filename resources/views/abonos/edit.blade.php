@@ -1,19 +1,13 @@
-@extends('plantillas.empleado')
+@extends('empleados.index')
 @section('contenido')
-<form action="{{route('abonos.update', $abono_encontrado->id)}}" method="post">
+<form action="{{route('abonos.update', $abono)}}" method="post">
     @method('PUT')
     @csrf
-    <label for='id'>ID</label>
-    <input type='text' name='id' id='id' value="{{$abono_encontrado->id}}">
+    <label for='cantidad'>Cantidad abonada</label>
+    <input type='text' name='cantidad' id='cantidad' value="{{$abono->cantidad}}">
     <br>
-    <label for='servicio'>Servicio</label>
-    <input type='text' name='servicio' id='servicio' value="{{$abono_encontrado->servicio}}">
-    <br>
-    <label for='precio'>Precio</label>
-    <input type='text' name='precio' id='precio' value="{{$abono_encontrado->precio}}">
-    <br>
-    <label for='cantidad_abonada'>Cantidad abonada</label>
-    <input type='text' name='cantidad_abonada' id='cantidad_abonada' value="{{$abono_encontrado->cantidad_abonada}}">
+    <label for='descripcion'>Descripcion</label>
+    <input type='text' name='descripcion' id='descripcion' value="{{$abono->descripcion}}">
     <br>
     <input type="submit" value="ACTUALIZAR">
 </form>

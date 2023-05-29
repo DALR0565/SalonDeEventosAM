@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class midgerente
+class verificaciongerente
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class midgerente
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user() instanceof Gerente){
-            return redirect()->back();
+            return redirect(route('clientes.index'));
         }
         return $next($request);
     }

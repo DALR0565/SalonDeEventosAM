@@ -1,4 +1,4 @@
-@extends('plantillas.gerente')
+@extends('empleados.index')
 @section('contenido')
 <style>
     *{
@@ -68,39 +68,41 @@
 </style>
 
 <div class="table-container">
-    <h1 class="heading">Empleados registrados</h1>
-    {{--@dump($empleados)--}}
+    <h1 class="heading">Abonos registrados</h1>
+    {{--@dump($abonos)--}}
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Sexo</th>
-                <th>Correo electronico</th>
-                <th>Clave</th>
-                <th>Telefono</th>
-                   <!--<th>Rol del usuario</th>-->
+                <th>Cantidad</th>
+                <th>Descripcion</th>
+                <th>Gerente</th>
+                <th>Empleado</th>
+                <th>Evento</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         
-        @foreach($gerentes as $gerente)         {{-- Recorremos los arreglos creados en el arreglo--}}
-            @if(!empty($gerente))               {{-- Verificamos que el array no este vacio--}}
+        @foreach(App\Models\Abono::all() as $abono)         {{-- Recorremos los arreglos creados en el arreglo--}}
+            @if(!empty($abono))               {{-- Verificamos que el array no este vacio--}}
             <tr>
-                <td>{{$gerente->id}}</td>
-                <td>{{$gerente->nombres}}</td>
-                <td>{{$gerente->apellidos}}</td>
-                <td>{{$gerente->edad}}</td>
-                <td>{{$gerente->sexo}}</td>
-                <td>{{$gerente->correo}}</td>
-                <td>{{$gerente->clave}}</td>
-                <td>{{$gerente->telefono}}</td>
-                   <!--<td>{{$gerente->rol}}</td>-->
-                <td><a href="{{route('gerentes.edit', $gerente->id)}}" class="btn">Actualizar</a>
-                <form action="{{route('gerentes.destroy', $gerente->id)}}" method="post">
+                <td>{{$abono->cantidad}}</td>
+                <td>{{$abono->descripcion}}</td>
+                <td>
+                @if(!empty(App\Models\Gerente::find($abono->gerente_id)))
+                    {{App\Models\Gerente::find($abono->gerente_id)->nombres}}
+                @else
+                @endif
+                </td>
+                <td>
+                    @if(!empty(App\Models\Empleado::find($abono->empleado_id)))
+                        {{App\Models\Empleado::find($abono->empleado_id)->nombres}}
+                    @else
+                    @endif
+                </td>
+                <td>{{App\Models\Evento::find($abono->evento_id)->nombre}}</td>
+                <td><a href="{{route('abonos.edit', $abono->id)}}" class="btn">Actualizar</a>
+                <form action="{{route('abonos.destroy', $abono->id)}}" method="post">
                             @method('DELETE')
                             @csrf
                             <input class="btn" type="submit" value="BORRAR">
@@ -111,6 +113,6 @@
             @endforeach
         </tbody>
     </table>
-    <a class="btn" href="{{route('gerentes.create')}}">Agregar nuevo gerente</a>
+    <a class="btn" href="{{route('abonos.create')}}">Agregar nuevo abono</a>
     </div>
 @endsection

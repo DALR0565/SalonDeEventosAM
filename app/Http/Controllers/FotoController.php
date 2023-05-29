@@ -32,6 +32,7 @@ class FotoController extends Controller
      */
     public function store(StoreFotoRequest $request, Evento $evento)
     {
+        $this->authorize('create',Foto::class);
         //$this->authorize('create',Foto::class);
         if ($request->hasFile('imagenes')) {
             $imagenes = $request->file('imagenes');
@@ -71,19 +72,9 @@ class FotoController extends Controller
      */
     public function update(UpdateFotoRequest $request, Evento $evento, Foto $foto)
     {
-        if ($request->hasFile('imagenes')) {
-            $imagenes = $request->file('imagenes');
-    
-            foreach ($imagenes as $archivo) {
-                //$archivo = $request->file('imagen');
-                $nombreDelArchivo = $archivo->getClientOriginalName();
-                $imagen = Storage::disk('publico')->putFileAs('',$archivo,$nombreDelArchivo);
-                $foto->imagen = $imagen;
-                $foto->descripcion = $request->input('descripcion');
-                $foto->evento_id = $evento->id;
-                $foto->save();
-            }
-        }
+        $this->authorize('update',$foto);
+        $foto->descripcion = $request->input('descripcion');
+        $foto->save();
         return redirect()->route('eventos.fotos.index', $evento->id);
     }
 

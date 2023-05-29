@@ -9,23 +9,24 @@ class Evento extends Model
 {
     use HasFactory;
     public function paquetes(){
-        return $this->belongsTo('App\Models\Paquete');
+        return $this->belongsTo('App\Models\Paquete','paquete_id', 'id');
     }
     
+    
     public function servicios(){
-        return $this->belongsToMany('App\Models\Servicio');
+        return $this->belongsToMany('App\Models\Servicio');//
     }
 
     public function usuarios(){
-        return $this->belongsTo('App\Models\Usuario');
+        return $this->belongsTo('App\Models\Usuario','usuario_id', 'id');
     }
 
     public function clientes(){
-        return $this->belongsTo('App\Models\Cliente');
+        return $this->belongsTo('App\Models\Cliente','cliente_id', 'id');
     }
 
     public function fotos(){
-        return $this->HasMany('App\Models\Foto');
+        return $this->hasMany('App\Models\Foto');
     }
 
     public function abonos(){

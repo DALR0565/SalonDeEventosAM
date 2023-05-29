@@ -10,6 +10,6 @@ class Cliente extends Authenticatable
 {
     use HasFactory;
     public function eventos(){
-        return $this->HasMany('App\Models\Evento');
+        return $this->hasMany('App\Models\Evento');
     }
 }

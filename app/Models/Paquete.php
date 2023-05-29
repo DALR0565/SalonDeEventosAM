@@ -9,12 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Paquete extends Model
 {
     public function eventos(){
-        return $this->HasMany('App\Models\Evento');
+        return $this->hasMany('App\Models\Evento');
     }
-
-    /*public function servicio(){
-        return $this->belongsToMany('App\Models\Servicio');
-    }*/
     
     use HasFactory;
     

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Abono;
 use App\Http\Requests\StoreAbonoRequest;
 use App\Http\Requests\UpdateAbonoRequest;
+use App\Models\Empleado;
+use App\Models\Gerente;
+use Illuminate\Support\Facades\Auth;
 
 class AbonoController extends Controller
 {
@@ -13,6 +16,8 @@ class AbonoController extends Controller
      */
     public function index()
     {
+        $abono = Abono::all();
+        return view('abonos.index',compact('abono'));
         //
     }
 
@@ -21,7 +26,7 @@ class AbonoController extends Controller
      */
     public function create()
     {
-        //
+        return view('abonos.create');
     }
 
     /**
@@ -29,7 +34,18 @@ class AbonoController extends Controller
      */
     public function store(StoreAbonoRequest $request)
     {
-        //
+        $abono = new Abono();
+        $abono->cantidad = $request->input('cantidad');
+        $abono->descripcion = $request->input('descripcion');
+        $abono->evento_id = $request->input('evento_id');
+        if(Auth::user() instanceof Gerente){
+            $abono->gerente_id = Auth::user()->id;
+        }else if(Auth::user() instanceof Empleado){
+            $abono->empleado_id = Auth::user()->id;
+        }
+        
+        $abono->save();
+        return redirect(route('abonos.index'));
     }
 
     /**
@@ -45,7 +61,7 @@ class AbonoController extends Controller
      */
     public function edit(Abono $abono)
     {
-        //
+        return view('abonos.edit', compact('abono'));
     }
 
     /**
@@ -53,7 +69,11 @@ class AbonoController extends Controller
      */
     public function update(UpdateAbonoRequest $request, Abono $abono)
     {
-        //
+        $abono->cantidad = $request->input('cantidad');
+        $abono->descripcion = $request->input('descripcion');
+        $abono->save();
+
+        return redirect(route('abonos.index'));
     }
 
     /**
@@ -61,6 +81,7 @@ class AbonoController extends Controller
      */
     public function destroy(Abono $abono)
     {
-        //
+        $abono->delete();
+        return redirect(route('abonos.index'));
     }
 }

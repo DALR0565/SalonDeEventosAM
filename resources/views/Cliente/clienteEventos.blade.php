@@ -76,6 +76,7 @@
         @endif
         
         <h1 class="subtitle">Confirmados</h1>
+
         <div class="container">
         @foreach(Auth::user()->eventos as $evento)
         @if($evento->confirmacion == "Confirmado")
@@ -106,6 +107,7 @@
         @endif
         @endforeach
         </div>
+        
 
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <h1 class="subtitle">Pendientes</h1>

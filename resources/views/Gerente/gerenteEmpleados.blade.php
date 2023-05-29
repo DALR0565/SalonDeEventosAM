@@ -81,7 +81,7 @@
                 <th>Correo electronico</th>
                 <th>Clave</th>
                 <th>Telefono</th>
-                <th>Rol del usuario</th>
+                   <!--<th>Rol del usuario</th>-->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -98,7 +98,7 @@
                 <td>{{$empleado->correo}}</td>
                 <td>{{$empleado->clave}}</td>
                 <td>{{$empleado->telefono}}</td>
-                <td>{{$empleado->rol}}</td>
+                   <!--<td>{{$empleado->rol}}</td>-->
                 <td><a href="{{route('empleados.edit', $empleado->id)}}" class="btn">Actualizar</a>
                 <form action="{{route('empleados.destroy', $empleado->id)}}" method="post">
                             @method('DELETE')

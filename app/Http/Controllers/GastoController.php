@@ -13,7 +13,8 @@ class GastoController extends Controller
      */
     public function index()
     {
-        //
+        $gasto = Gasto::all();
+        return view('gastos.index',compact('gasto'));
     }
 
     /**
@@ -21,7 +22,7 @@ class GastoController extends Controller
      */
     public function create()
     {
-        //
+        return view('gastos.create');
     }
 
     /**
@@ -29,7 +30,11 @@ class GastoController extends Controller
      */
     public function store(StoreGastoRequest $request)
     {
-        //
+        $gasto = new Gasto();
+        $gasto->cantidad = $request->input('cantidad');
+        $gasto->descripcion = $request->input('descripcion');
+        $gasto->save();
+        return redirect(route('gastos.index'));
     }
 
     /**
@@ -45,7 +50,7 @@ class GastoController extends Controller
      */
     public function edit(Gasto $gasto)
     {
-        //
+        return view('gastos.edit', compact('gasto'));
     }
 
     /**
@@ -53,7 +58,10 @@ class GastoController extends Controller
      */
     public function update(UpdateGastoRequest $request, Gasto $gasto)
     {
-        //
+        $gasto->cantidad = $request->input('cantidad');
+        $gasto->descripcion = $request->input('descripcion');
+        $gasto->save();
+        return redirect(route('gastos.index'));
     }
 
     /**
@@ -61,6 +69,7 @@ class GastoController extends Controller
      */
     public function destroy(Gasto $gasto)
     {
-        //
+        $gasto->delete();
+        return redirect(route('gastos.index'));
     }
 }

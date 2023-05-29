@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Cliente;
 use App\Models\Evento;
+use App\Models\Gerente;
 //use App\Models\Usuario;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Foundation\Auth\User as Usuario;
@@ -48,6 +49,8 @@ class EventoPolicy
             if($evento->confirmacion == "Pendiente"){
                 return true;
             }
+        }else if($usuario instanceof Gerente){
+            return true;
         }
         return false;
     }
@@ -69,6 +72,8 @@ class EventoPolicy
     {
         if($usuario instanceof Cliente && $usuario->id == $evento->cliente_id){
             if($evento->confirmacion == "Pendiente"){
+                return true;
+            }else if($usuario instanceof Gerente){
                 return true;
             }
         }

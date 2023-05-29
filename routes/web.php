@@ -8,6 +8,7 @@ use App\Http\Controllers\AbonoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\GastoController;
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\UsuarioController;
 
@@ -26,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('plantillas.cliente');
-})->name('inicio')->middleware("web")->middleware('midcliente');
+})->name('inicio')->middleware("web")->middleware('verificaciongerente');
+//Checar cuando se guarda en empleado y gerente
 
 
 
@@ -80,62 +82,36 @@ Route::get('servicios',[ServicioController::class, 'index'])->name('Empleado.ger
 Route::resource('usuarios',UsuarioController::class);
 
 //RUTAS RECURSO DE GERENTE - USUARIOS
-Route::resource('clientes',ClienteController::class)->middleware('auth');
+Route::resource('clientes',ClienteController::class)->middleware('auth')->middleware('verificacioncliente');
 
 //RUTAS RECURSO DE GERENTE - USUARIOS
-Route::resource('empleados',EmpleadoController::class)->middleware('auth');
+Route::resource('empleados',EmpleadoController::class)->middleware('auth')->middleware('verificacioncliente');
+
 
 //RUTAS RECURSO DE GERENTE - USUARIOS
-Route::resource('gerentes',GerenteController::class)->middleware('auth');
+Route::resource('gerentes',GerenteController::class)->middleware('auth')->middleware('verificacioncliente');
 
 //RUTAS RECURSO DE GERENTE - PAQUETES
-Route::resource('paquetes',PaqueteController::class)->middleware('auth');
+Route::resource('paquetes',PaqueteController::class)->middleware('auth')->middleware('verificacioncliente');
 
 //RUTAS RECURSO DE GERENTE - SERVICIOS
-Route::resource('servicios',ServicioController::class)->middleware('auth');
+Route::resource('servicios',ServicioController::class)->middleware('auth')->middleware('verificacioncliente');
 
 
 //RUTAS RECURSO DE CLIENTE - EVENTOS
-Route::resource('eventos',EventoController::class);
-Route::get('confirmacion/{cual?}',[EventoController::class, 'confirmar'])->name('eventos.confirmar');
-Route::get('pendiente/{cual?}',[EventoController::class, 'pendiente'])->name('eventos.pendiente');
+Route::resource('eventos',EventoController::class)->middleware('auth')->middleware('verificacioncliente');
+///////
+Route::get('confirmacion/{cual?}',[EventoController::class, 'confirmar'])->name('eventos.confirmar')->middleware('auth')->middleware('verificacioncliente');
+Route::get('pendiente/{cual?}',[EventoController::class, 'pendiente'])->name('eventos.pendiente')->middleware('auth')->middleware('verificacioncliente');
 
 //RUTAS DE EMPLEADO - ABONOS
-Route::get('actualizarabono/{cual?}',[AbonoController::class, 'edit'])->name('abonos.edit');
-Route::post('guardarabono',[AbonoController::class, 'store'])->name('abonos.store');
-Route::get('crearabono',[AbonoController::class, 'create'])->name('abonos.create');
-Route::put('actualizarabono/{cual?}',[AbonoController::class, 'update'])->name('abonos.update');
-Route::delete('borrarabono/{cual?}',[AbonoController::class, 'destroy'])->name('abonos.destroy');
-//Route::resource('abonos',AbonoController::class);
+Route::resource('abonos',AbonoController::class);
 
+//RUTAS DE GASTOS
+Route::resource('gastos',GastoController::class);
 //RUTA RECURSO DE FOTOS
-Route::resource('eventos.fotos',FotoController::class);
+Route::resource('eventos.fotos',FotoController::class)->middleware('auth')->middleware('verificacioncliente');
 
-
-/*Route::get('gerente/clientes',function(){
-    return view();
-})->name('gerente_clientes');
-
-Route::get('gerente/gerentes',function(){
-    return view();
-})->name('gerente_gerentes');
-
-Route::get('gerente/empleados',function(){
-    return view();
-})->name('gerente_empleados');
-
-Route::get('gerente/paquetes',function(){
-    return view();
-})->name('gerente_paquetes');
-
-Route::get('gerente/servicios',function(){
-    return view();
-})->name('gerente_servicios');
-
-Route::get('gerente/eventos',function(){
-    return view();
-})->name('gerente_eventos');
-*/
 //Rutas de los usuarios
 Route::get('gerente',function(){
     return view('plantillas.gerente');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Http\Requests\StoreClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
+use App\Models\Gerente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,10 +45,15 @@ class ClienteController extends Controller
         $cliente->save();
         //$usuarioEncontrado = Usuario::where('correo',$usuario->correo)->first();
         //Se crea la session
-        Auth::guard('guard_cliente')->login($cliente);
-        $_SESSION['AuthGuard']= 'guard_cliente';
-        
-        return redirect(route('inicio'));
+        if(Auth::guest()){
+            Auth::guard('guard_cliente')->login($cliente);
+            $_SESSION['AuthGuard']= 'guard_cliente';
+            return redirect(route('inicio'));
+        }else if(Auth::user() instanceof Gerente){
+            return redirect(route('clientes.index'));
+        }else{
+            return redirect(route('abonos.index'));
+        }
     }
 
     /**

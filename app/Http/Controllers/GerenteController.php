@@ -32,7 +32,6 @@ class GerenteController extends Controller
      */
     public function store(StoreGerenteRequest $request)
     {
-        $this->authorize('create');
         $gerente = new Gerente();
         $gerente->nombres = $request->input('nombres');
         $gerente->apellidos = $request->input('apellidos');
@@ -46,7 +45,7 @@ class GerenteController extends Controller
         Auth::guard('guard_gerente')->login($gerente);
         $_SESSION['AuthGuard'] = 'guard_gerente';
         
-        return redirect(route('inicio'));
+        return redirect(route('gerentes.index'));
     }
 
     /**
@@ -78,6 +77,7 @@ class GerenteController extends Controller
         $gerente->clave = Hash::make($request->input('clave'));
         $gerente->telefono = $request->input('telefono');
         $gerente->save();
+        return redirect(route('gerentes.index'));
     }
 
     /**

@@ -79,7 +79,9 @@
                 <div class="gallery-item-overlay-content">
                     <!--<h3 class="gallery-item-title">Título de la imagen 1</h3>-->
                     <p class="gallery-item-description">{{$foto->descripcion}}</p>
+                    @can('update',$foto)
                     <a href="{{route('eventos.fotos.edit', [$evento->id,$foto->id])}}">Editar</a> <!-- Ejemplo de etiqueta <a> -->
+                    @endcan
                     @can('delete',$foto)
                     <form action="{{route('eventos.fotos.destroy', [$evento->id,$foto->id])}}" method="post">
                     @method('DELETE')
@@ -93,7 +95,9 @@
     </div>
     @endforeach
     </div>
+    @can('create',App\Models\Foto::class)
     <a href="{{route('eventos.fotos.create',$evento->id)}}">Agregar imagenes</a>
+    @endcan
     <br><br>
     <a href="{{route('miseventos')}}">Regresar</a>
 </body>

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class midcliente
+class verificacioncliente
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class midcliente
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user() instanceof Cliente){
-            view('plantillas.cliente');
+            return redirect(route('inicio'));
         }
         return $next($request);
     }

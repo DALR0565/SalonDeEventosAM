@@ -37,7 +37,7 @@ class LoginController extends Controller
                     if($coincide){
                         Auth::guard('guard_empleado')->login( $usuarioEncontrado );
                         $_SESSION['AuthGuard']= 'guard_empleado';
-                        return redirect(route('empleados'));
+                        return redirect(route('empleados.index'));
                     }else{
                         return redirect()->back();
                         //Retornar que la contrasena no coincide

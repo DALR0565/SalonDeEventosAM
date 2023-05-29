@@ -23,9 +23,6 @@
     <label for='telefono'>Telefono</label>
     <input type='text' name='telefono' id='telefono'>
     <br>
-    <label for='rol'>Rol del usuario</label>
-    <input type='text' name='rol' id='rol'>
-    <br>
     <input type="submit" value="GUARDAR">
 </form>
 @endsection

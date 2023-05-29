@@ -16,7 +16,7 @@ return new class extends Migration
             $table->float('cantidad');
             $table->text('descripcion');
 
-            $table->unsignedBigInteger('gerente_id');
+            $table->unsignedBigInteger('gerente_id')->nullable();
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->unsignedBigInteger('evento_id');
 

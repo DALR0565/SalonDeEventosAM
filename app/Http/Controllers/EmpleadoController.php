@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
+use App\Models\Abono;
+use App\Models\Gerente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +18,13 @@ class EmpleadoController extends Controller
     public function index()
     {
         $empleados = Empleado::all();
-        return view('Gerente.gerenteEmpleados',compact('empleados'));
+        if(Auth::user() instanceof Empleado){
+            $abonos = Abono::all();
+            return view('empleados.index',compact('abonos'));
+        }else if(Auth::user() instanceof Gerente){
+            return view('Gerente.gerenteEmpleados',compact('empleados'));
+        }
+        
     }
 
     /**
@@ -43,10 +51,13 @@ class EmpleadoController extends Controller
         $empleado->save();
         //$usuarioEncontrado = Usuario::where('correo',$usuario->correo)->first();
         //Se crea la session
-        Auth::guard('guard_empleado')->login($empleado);
-        $_SESSION['AuthGuard']= 'guard_empleado';
+        if(!(Auth::user() instanceof Gerente)){
+            Auth::guard('guard_empleado')->login($empleado);
+            $_SESSION['AuthGuard']= 'guard_empleado';
+        }
+        
 
-        return redirect(route('inicio'));
+        return redirect(route('empleados.index'));
     }
 
     /**

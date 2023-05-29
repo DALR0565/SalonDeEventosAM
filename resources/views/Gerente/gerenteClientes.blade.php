@@ -81,7 +81,7 @@
                 <th>Correo electronico</th>
                 <th>Clave</th>
                 <th>Telefono</th>
-                <th>Rol del usuario</th>
+                   <!--<th>Rol del usuario</th>-->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -98,7 +98,7 @@
                 <td>{{$cliente->correo}}</td>
                 <td>{{$cliente->clave}}</td>
                 <td>{{$cliente->telefono}}</td>
-                <td>{{$cliente->rol}}</td>
+                <!--<td>{{$cliente->rol}}</td>-->
                 <td><a href="{{route('clientes.edit', $cliente->id)}}" class="btn">Actualizar</a>
                 <form action="{{route('clientes.destroy', $cliente->id)}}" method="post">
                             @method('DELETE')
@@ -111,6 +111,6 @@
             @endforeach
         </tbody>
     </table>
-    <a class="btn" href="{{route('clientes.create')}}">Agregar nuevo usuario</a>
+    <a class="btn" href="{{route('clientes.create')}}">Agregar nuevo cliente</a>
     </div>
 @endsection
