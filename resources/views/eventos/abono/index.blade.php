@@ -120,5 +120,10 @@
     @can('create',[App\Models\Abono::class, $evento])
     <a class="btn" href="{{route('eventos.abonos.create', $evento->id)}}">Agregar nuevo abono</a>
     @endcan
+    @if(isset($error))
+        <p>
+            {{$error}}
+        </p>
+    @endif
     </div>
 @endsection

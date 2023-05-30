@@ -64,38 +64,59 @@
                 </tr>
             </thead>
             <tbody>
-                {{--@foreach()--}}
+                
                 <tr>
-                    <td>{{--fecha--}}</td>
-                    <td>{{--descripcion--}}</td>
-                    <td>{{--cargos--}}</td>
-                    <td>{{--abonos--}}</td>
+                    <td>{{$evento->fecha}}</td>
+                    <td>{{$evento->descripcion}}</td>
+                    
+                    <td><label>Paquete: {{$evento->paquetes->nombre}}</label>
+                    ${{$evento->paquetes->precio}}
+                    <br>
+                    <label>Servicios:</label>
+                    @foreach($evento->servicios as $servicio)
+                        {{$servicio->nombre}} : ${{$servicio->precio}}
+                        
+                    @endforeach
+                    
+                    </td>
+                    
+                    <td>@foreach($abonos as $abono)
+                        {{$abono->cantidad}}
+                        <br>
+                        @endforeach
+                    </td>
                 </tr>
-                {{--@endforeach--}}
+                
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2" class="total">Total</td>
-                    <td>$130.00</td>
-                    <td>$100.00</td>
+                    <td colspan="2" class="total">SubTotal</td>
+                    <td>{{$total}}</td>
+                    <td>{{$abonado}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="total">Total</td>
+                    <td>{{($total-$abonado)}}</td>
                 </tr>
             </tfoot>
         </table>
         
         <div class="contract">
             <h2>Contrato</h2>
-            <p>Fecha de contratacion: </p>
-            <p>Hora de entrada: </p>
-            <p>Hora de salida: </p>
-            <p>Proposito: </p>
-            <p>Numero de invitados: </p>
-            <p>Paquete contratado: </p>
+            <p>Fecha de contratacion: {{$evento->fecha}}</p>
+            <p>Hora de entrada: {{$evento->hora_de_inicio}}</p>
+            <p>Hora de salida: {{$evento->hora_de_inicio}}</p>
+            <p>Proposito: {{$evento->descripcion}}</p>
+            <p>Numero de invitados: {{$evento->numero_de_invitados}}</p>
+            <p>Paquete contratado: {{$evento->paquetes->nombre}}</p>
             <p>Servicios contratados: 
-            {{--@foreach()--}}
-                
-            {{--@endforeach--}}
+            @foreach($evento->servicios as $servicio)
+                        {{$servicio->nombre}} : {{$servicio->precio}}
+                        
+                    @endforeach
             </p>
         </div>
+        <a href="{{route('miseventos')}}">Regresar</a>
     </div>
 </body>
 </html>

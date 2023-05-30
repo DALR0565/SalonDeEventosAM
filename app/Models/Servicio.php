@@ -13,7 +13,7 @@ class Servicio extends Model
     }*/
 
     public function eventos(){
-        return $this->belongsToMany('App\Models\Evento','evento_servicio');
+        return $this->belongsToMany('App\Models\Evento');
     }
 
     use HasFactory;

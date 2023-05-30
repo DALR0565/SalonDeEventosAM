@@ -153,9 +153,21 @@ class EventoController extends Controller
     }
 
 
-    public function contrato(Evento $evento){
-        
-        return view('Cliente.estadoDeCuenta',compact('evento','abonos'));
+    public function contrato($id){
+        $evento = Evento::find($id);
+        $total = $evento->paquetes->precio;
+        $abonos = $evento->abonos;
+        $servicios = $evento->servicios;
+        if(!empty($servicios)){
+            foreach($servicios as $servicio){
+                $total = $total + $servicio->precio;
+            }
+        }
+        $abonado = 0;
+        foreach($abonos as $abono){
+            $abonado = $abonado + $abono->cantidad;
+        }
+        return view('Cliente.estadoDeCuenta',compact('evento','abonos','abonado','total'));
     }
     /*
     $hora_inicio_repetido = $todosLosEventos->contains(function ($evento) use ($hora_inicio){

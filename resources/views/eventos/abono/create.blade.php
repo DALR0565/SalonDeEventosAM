@@ -12,5 +12,10 @@
     <br>
     <input type="submit" value="GUARDAR">
 </form>
+@if(isset($error))
+    <div class="alert alert-danger">
+        {{$error}}
+    </div>
+@endif
 @endcan
 @endsection

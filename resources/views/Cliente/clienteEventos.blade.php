@@ -105,7 +105,7 @@
                 <a  href="{{route('eventos.fotos.index',$evento->id)}}">Galería de fotos</a>
             </p>
             <p>
-                <a  href="{{route('contrato')}}">Ver contrato</a>
+                <a  href="{{route('contrato',$evento->id)}}">Ver contrato</a>
             </p>
         </div>
         @endif

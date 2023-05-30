@@ -70,6 +70,10 @@ Route::get('gerentePaquetes',function(){
 Route::get('miseventos',function(){
     return view('Cliente.clienteEventos');
 })->name('miseventos')->middleware('auth');
+
+Route::get('abonos',function(){
+    return view('abonos.index');
+})->name('abonos');
 /*
 Route::get('usuarios',[UsuarioController::class, 'index'])->name('Empleado.gerenteUsuarios');
 Route::get('paquetes',[PaqueteController::class, 'index'])->name('Empleado.gerentePaquetes');
@@ -107,7 +111,7 @@ Route::get('confirmacion/{cual?}',[EventoController::class, 'confirmar'])->name(
 Route::get('pendiente/{cual?}',[EventoController::class, 'pendiente'])->name('eventos.pendiente')->middleware('auth')->middleware('verificacioncliente');
 
 
-Route::get('contrato/{cual?}',[EventoController::class,''])->name('contrato');
+Route::get('contrato/{cual?}',[EventoController::class,'contrato'])->name('contrato');
 
 
 //RUTAS DE EMPLEADO - ABONOS
@@ -119,7 +123,7 @@ Route::get('abonos',function(){
 //RUTAS DE GASTOS
 Route::resource('gastos',GastoController::class);
 //RUTA RECURSO DE FOTOS
-Route::resource('eventos.fotos',FotoController::class)->middleware('auth')->middleware('verificacioncliente');
+Route::resource('eventos.fotos',FotoController::class)->middleware('auth');
 
 //Rutas de los usuarios
 Route::get('gerente',function(){

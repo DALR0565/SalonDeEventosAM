@@ -45,9 +45,28 @@ class AbonoController extends Controller
         }else if(Auth::user() instanceof Empleado){
             $abono->empleado_id = Auth::user()->id;
         }
+
+        $total = $evento->paquetes->precio;
+        $servicios = $evento->servicios;
+        if(!empty($servicios)){
+            foreach($servicios as $servicio){
+                $total = $total + $servicio->precio;
+            }
+        }
+        $abonado = 0;
+        $abonos = $evento->abonos;
+        foreach($abonos as $abonoUno){
+            $abonado = $abonado + $abonoUno->cantidad;
+        }
+        $abonado = $abonado + $request->input('cantidad');
+        if($total >= $abonado){
+            $abono->save();
+            return view('eventos.abono.index',compact('evento'));
+        }else{
+            $error = "Se ha excedido el limite permitido de abonos";
+            return view('eventos.abono.index',compact('evento'))->with('error',$error);
+        }
         
-        $abono->save();
-        return view('eventos.abono.index',compact('evento'));
     }
 
     /**
