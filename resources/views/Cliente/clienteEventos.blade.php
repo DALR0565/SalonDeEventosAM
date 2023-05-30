@@ -94,7 +94,8 @@
             <p>Numero de invitados: {{$evento->numero_de_invitados}}</p>
             <p>Status: <FONT COLOR="green">{{$evento->confirmacion}} </FONT></p>
             <p>Detalles: {{$evento->detalles}}</p>
-            <p>Paquete contratado: {{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</p>
+            
+            <p>Paquete contratado: {{$evento->paquetes->nombre}}</p>
             <p>Servicios contratados: 
                 @foreach($evento->servicios as $servicio)
                     {{$servicio->nombre}}
@@ -102,6 +103,9 @@
             </p>
             <p>
                 <a  href="{{route('eventos.fotos.index',$evento->id)}}">Galería de fotos</a>
+            </p>
+            <p>
+                <a  href="{{route('contrato')}}">Ver contrato</a>
             </p>
         </div>
         @endif
@@ -121,7 +125,7 @@
             <p>Numero de invitados: {{$evento->numero_de_invitados}}</p>
             <p>Status: <FONT COLOR="red">{{$evento->confirmacion}} </FONT></p>
             <p>Detalles: {{$evento->detalles}}</p>
-            <p>Paquete contratado: {{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</p>
+            <p>Paquete contratado: {{$evento->paquetes->nombre}}</p>
             <p>Servicios contratados: 
                 @foreach($evento->servicios as $servicio)
                     {{$servicio->nombre}}

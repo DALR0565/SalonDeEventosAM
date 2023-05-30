@@ -17,6 +17,10 @@ return new class extends Migration
             $table->text('descripcion');
             $table->float('precio');
             $table->string('imagen');
+
+
+            $table->unsignedBigInteger('gerente_id');
+            $table->foreign('gerente_id')->references('id')->on('gerentes')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

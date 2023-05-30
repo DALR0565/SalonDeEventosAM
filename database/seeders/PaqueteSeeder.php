@@ -19,6 +19,7 @@ class PaqueteSeeder extends Seeder
         $paquete->descripcion = "Este es el paquete de Bodas";
         $paquete->precio = 3500;
         $paquete->imagen = "boda.jpg";
+        $paquete->gerente_id = 1;
         $paquete->save();
 
         $paquete = new Paquete();
@@ -26,6 +27,7 @@ class PaqueteSeeder extends Seeder
         $paquete->descripcion = "Este es el paquete de XV años";
         $paquete->precio = 2500;
         $paquete->imagen = "xv.jpg";
+        $paquete->gerente_id = 1;
         $paquete->save();
 
         $paquete = new Paquete();
@@ -33,6 +35,7 @@ class PaqueteSeeder extends Seeder
         $paquete->descripcion = "Este es el paquete de Fiesta infantil";
         $paquete->precio = 1800;
         $paquete->imagen = "fiestainfantil.jpg";
+        $paquete->gerente_id = 1;
         $paquete->save();
 
         $paquete = new Paquete();
@@ -40,6 +43,7 @@ class PaqueteSeeder extends Seeder
         $paquete->descripcion = "Este es el paquete de Bautizos";
         $paquete->precio = 2000;
         $paquete->imagen = "bautizo.jpg";
+        $paquete->gerente_id = 1;
         $paquete->save();
 
     }

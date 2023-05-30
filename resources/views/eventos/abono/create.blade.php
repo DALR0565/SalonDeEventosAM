@@ -1,7 +1,9 @@
-@extends('plantillas.empleado')
+@extends('empleados.index')
 @section('contenido')
-<form action="{{route('gastos.store')}}" method="post">
+@can('create',[App\Models\Abono::class, $evento])
+<form action="{{ route('eventos.abonos.store', $evento->id) }}" method="post">
     @csrf
+    <label>Evento: {{$evento->nombre}}</label>
     <label for='cantidad'>Cantidad a abonar</label>
     <input type='number' name='cantidad' id='cantidad' required>
     <br>
@@ -10,4 +12,5 @@
     <br>
     <input type="submit" value="GUARDAR">
 </form>
+@endcan
 @endsection

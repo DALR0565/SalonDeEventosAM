@@ -78,31 +78,47 @@
                 <th>Gerente</th>
                 <th>Empleado</th>
                 <th>Evento</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         
-        @foreach(App\Models\Abono::all() as $abono)         {{-- Recorremos los arreglos creados en el arreglo--}}
+        @foreach($evento->abonos as $abono)         {{-- Recorremos los arreglos creados en el arreglo--}}
             @if(!empty($abono))               {{-- Verificamos que el array no este vacio--}}
             <tr>
                 <td>{{$abono->cantidad}}</td>
                 <td>{{$abono->descripcion}}</td>
                 <td>
-                @if(!empty(App\Models\Gerente::find($abono->gerente_id)))
-                    {{App\Models\Gerente::find($abono->gerente_id)->nombres}}
+                @if(!empty($abono->gerentes))
+                    {{$abono->gerentes->nombres}}
                 @else
                 @endif
                 </td>
                 <td>
-                    @if(!empty(App\Models\Empleado::find($abono->empleado_id)))
-                        {{App\Models\Empleado::find($abono->empleado_id)->nombres}}
+                    @if(!empty($abono->empleados))
+                    {{$abono->empleados->nombres}}
                     @else
                     @endif
                 </td>
                 <td>{{App\Models\Evento::find($abono->evento_id)->nombre}}</td>
-                @endif
+                @can('update',$abono)
+                <td><a href="{{route('eventos.abonos.edit', [$evento->id,$abono->id])}}" class="btn">Actualizar</a>
+                @endcan
+                @can('delete',$abono)
+                <form action="{{route('eventos.abonos.destroy', [$evento->id,$abono->id])}}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <input class="btn" type="submit" value="BORRAR">
+                </form>
+                @endcan
+                </td>
+            </tr>
+            @endif
             @endforeach
         </tbody>
     </table>
+    @can('create',[App\Models\Abono::class, $evento])
+    <a class="btn" href="{{route('eventos.abonos.create', $evento->id)}}">Agregar nuevo abono</a>
+    @endcan
     </div>
 @endsection

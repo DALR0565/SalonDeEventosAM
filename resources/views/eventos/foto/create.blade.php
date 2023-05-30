@@ -5,13 +5,13 @@
         @csrf
         <div>
             <label for="imagenes">Imágenes:</label>
-            <input type="file" name="imagenes[]" id="imagenes" multiple accept="image/*">
+            <input type="file" name="imagenes[]" id="imagenes" multiple accept="image/*" required>
             <div id="preview-container"></div>
         </div>
 
         <div>
             <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
+            <textarea name="descripcion" id="descripcion" rows="4" cols="50" required></textarea>
         </div>
 
         <button type="submit">Enviar</button>

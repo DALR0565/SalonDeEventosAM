@@ -24,9 +24,6 @@
     <label for='telefono'>Telefono</label>
     <input type='text' name='telefono' id='telefono' value="{{$usuario->telefono}}">
     <br>
-    <label for='rol'>Rol del usuario</label>
-    <input type='text' name='rol' id='rol' value="{{$usuario->rol}}">
-    <br>
     <input type="submit" value="ACTUALIZAR">
 </form>
 @endsection

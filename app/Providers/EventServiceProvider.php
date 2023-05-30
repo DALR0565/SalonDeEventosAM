@@ -35,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Cliente::observe(ObserverCliente::class); ///Crear tambien para eventos, paquetes, etc.
+        Cliente::observe(ObserverCliente::class); 
         Gerente::observe(ObserverGerente::class);
         Paquete::observe(ObserverPaquete::class);
         Servicio::observe(ObserverServicio::class);

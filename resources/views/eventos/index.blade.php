@@ -68,39 +68,51 @@
 </style>
 
 <div class="table-container">
-    <h1 class="heading">Abonos registrados</h1>
-    {{--@dump($abonos)--}}
+    <h1 class="heading">Eventos registrados</h1>
     <table class="table">
         <thead>
             <tr>
-                <th>Cantidad</th>
-                <th>Descripcion</th>
-                <th>Gerente</th>
-                <th>Empleado</th>
-                <th>Evento</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Hora de inicio</th>
+                <th>Hora de cierre</th>
+                <th>Invitados</th>
+                <th>Confirmacion</th>
+                <th>Detalles</th>
+                <th>Paquete</th>
+                <th>Servicios</th>
+                <th>Cliente</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         
-        @foreach(App\Models\Abono::all() as $abono)         {{-- Recorremos los arreglos creados en el arreglo--}}
-            @if(!empty($abono))               {{-- Verificamos que el array no este vacio--}}
+        @foreach($eventos as $evento) 
+            @if(!empty($evento))               
             <tr>
-                <td>{{$abono->cantidad}}</td>
-                <td>{{$abono->descripcion}}</td>
-                <td>
-                @if(!empty(App\Models\Gerente::find($abono->gerente_id)))
-                    {{App\Models\Gerente::find($abono->gerente_id)->nombres}}
-                @else
-                @endif
+                <td>{{$evento->nombre}}</td>
+                <td>{{$evento->fecha}}</td>
+                <td>{{$evento->hora_de_inicio}}</td>
+                <td>{{$evento->hora_de_cierre}}</td>
+                <td>{{$evento->numero_de_invitados}}</td>
+                <td>{{$evento->confirmacion}} </td>
+                
+                <td>{{$evento->detalles}}</td>
+                
+                <td>{{$evento->paquetes->nombre}}</td>
+
+                <td>@foreach($evento->servicios as $servicio)
+                    {{$servicio->nombre}}
+                    <br>
+                    @endforeach
                 </td>
-                <td>
-                    @if(!empty(App\Models\Empleado::find($abono->empleado_id)))
-                        {{App\Models\Empleado::find($abono->empleado_id)->nombres}}
-                    @else
-                    @endif
-                </td>
-                <td>{{App\Models\Evento::find($abono->evento_id)->nombre}}</td>
-                @endif
+                
+                <td>{{$evento->clientes->nombres}}</td>
+                @can('create',[App\Models\Abono::class, $evento])
+                <td><a href="{{route('eventos.abonos.index', $evento->id)}}" class="btn">Abonar</a>
+                @endcan
+            </tr>
+            @endif
             @endforeach
         </tbody>
     </table>

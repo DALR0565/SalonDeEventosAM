@@ -17,9 +17,9 @@ class Evento extends Model
         return $this->belongsToMany('App\Models\Servicio');//
     }
 
-    public function usuarios(){
+    /*public function usuarios(){
         return $this->belongsTo('App\Models\Usuario','usuario_id', 'id');
-    }
+    }*/
 
     public function clientes(){
         return $this->belongsTo('App\Models\Cliente','cliente_id', 'id');

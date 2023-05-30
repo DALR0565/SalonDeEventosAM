@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateEventoRequest;
 use App\Models\Cliente;
 use App\Models\Gerente;
 use App\Models\Servicio;
+use Carbon\Carbon;
+use DateInterval;
 use Illuminate\Support\Facades\Auth;
 
 class EventoController extends Controller
@@ -23,9 +25,8 @@ class EventoController extends Controller
         }else if(Auth::user() instanceof Gerente){
             return view('Gerente.gerenteEventos',compact('eventos'));
         }else{
-            //abort(404);
+            return view('eventos.index',compact('eventos'));
         }
-        //return view('Gerente.gerenteEventos',compact('eventos'));
     }
 
     /**
@@ -33,7 +34,15 @@ class EventoController extends Controller
      */
     public function create()
     {
-        return view('eventos.create');
+        $eventos = Evento::all();
+
+        $fechasBloqueadas = [];
+        //Llenamos un array con las fechas ya ocupadas
+        foreach($eventos as $evento){
+            array_push($fechasBloqueadas, $evento->fecha);
+        }
+
+        return view('eventos.create',compact('fechasBloqueadas'));
     }
 
     /**
@@ -52,9 +61,8 @@ class EventoController extends Controller
         $evento->detalles = $request->input('detalles');
         $evento->paquete_id = $request->input('paquete_id');
         $evento->cliente_id = Auth::user()->id;
-        
-        $evento->save();
 
+        $evento->save();
         //Llenamos la tabla de paquete eventos.
         
         $arrayID = $request->input('servicio_id');
@@ -76,7 +84,17 @@ class EventoController extends Controller
      */
     public function edit(Evento $evento)
     {
-        return view('eventos.edit', compact('evento'));
+        $eventos = Evento::all();
+
+        $fechasBloqueadas = [];
+        //Llenamos un array con las fechas ya ocupadas
+        foreach($eventos as $eventoTodo){
+            if(!$eventoTodo->is($evento)){  //Si no es el mismo evento entonces seguir agregando las fechas apartadas
+                array_push($fechasBloqueadas, $eventoTodo->fecha);
+            }/*En caso de que se trate del mismo evento se le dara el permiso de elegir el mismo dia que tiene su evento
+            en caso de que se arrepienta y haya elegido otro dia*/
+        }
+        return view('eventos.edit', compact('evento', 'fechasBloqueadas'));
     }
 
     /**
@@ -133,5 +151,43 @@ class EventoController extends Controller
         $evento->save();
         return redirect(route('eventos.index'));
     }
+
+
+    public function contrato(Evento $evento){
+        
+        return view('Cliente.estadoDeCuenta',compact('evento','abonos'));
+    }
+    /*
+    $hora_inicio_repetido = $todosLosEventos->contains(function ($evento) use ($hora_inicio){
+            //Hay al menos un evento con la misma hora de inicia
+            return $evento->hora_de_inicio == $hora_inicio;
+        });
+
+        $hora_cierre_repetido = $todosLosEventos->contains(function ($evento) use ($hora_cierre){
+            //Hay al menos un evento con la misma hora final
+            return $evento->hora_de_cierre == $hora_cierre;
+        });
+
+        $fecha_repetido = $todosLosEventos->contains(function ($evento) use ($fecha){
+            //Hay al menos un evento con la misma fecha
+            return $evento->fecha == $fecha;
+        });
+
+        if($fecha_repetido){
+            //Retornar un error de que la fecha esta repetida
+        }else{
+            //El ultimo evento registrado
+            $ultimoEvento = $todosLosEventos->last();
+            //Obtenemos su hora y le sumamos la tolerancia de 4 horas
+            $hora_cierre_tolerancia = $ultimoEvento->hora_de_cierre->add(new DateInterval('PT4H'));;
+            //Comparamos si la hora de inicio es superior la hora del ultimo evento mas la tolerancia
+            $tolerancia = strtotime($hora_inicio) >= strtotime($hora_cierre_tolerancia);
+            if($tolerancia){
+                
+            }else{
+                //Retornar que no cumple con la tolerancia de 4 horas
+            }
+        }
+     */
 
 }

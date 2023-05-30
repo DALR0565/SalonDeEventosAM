@@ -11,7 +11,7 @@
         </div>-->
         <div>
             <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" rows="4" cols="50">{{$foto->descripcion}}</textarea>
+            <textarea name="descripcion" id="descripcion" rows="4" cols="50" required>{{$foto->descripcion}}</textarea>
         </div>
 
         <button type="submit">Actualizar</button>

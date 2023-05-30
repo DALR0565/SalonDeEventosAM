@@ -9,6 +9,7 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -29,7 +30,8 @@ class LoginController extends Controller
             if(is_null($usuarioEncontrado)){
                 $usuarioEncontrado = Empleado::where('correo',$correo)->first();
                 if(is_null($usuarioEncontrado)){
-                    return redirect()->back();
+                    $error = "Error:\nUsuario no existe";
+                    return view('Login.login')->with('error',$error);
                     //USUARIO NO EXISTE
                 }else{
                     $claveEmpleado = $usuarioEncontrado->clave;
@@ -37,9 +39,10 @@ class LoginController extends Controller
                     if($coincide){
                         Auth::guard('guard_empleado')->login( $usuarioEncontrado );
                         $_SESSION['AuthGuard']= 'guard_empleado';
-                        return redirect(route('empleados.index'));
+                        return redirect(route('abonos.index'));
                     }else{
-                        return redirect()->back();
+                        $error = "Error:\nContrasena no coincide";
+                        return view('Login.login')->with('error',$error);
                         //Retornar que la contrasena no coincide
                     } 
                 }
@@ -51,7 +54,8 @@ class LoginController extends Controller
                     $_SESSION['AuthGuard']= 'guard_gerente';
                     return redirect(route('clientes.index'));
                 }else{
-                    return redirect()->back();
+                    $error = "Error:\nContrasena no coincide";
+                        return view('Login.login')->with('error',$error);
                     //Retornar que la contrasena no coincide
                 } 
             }
@@ -63,7 +67,8 @@ class LoginController extends Controller
                 $_SESSION['AuthGuard']= 'guard_cliente';
                 return redirect(route('inicio'));
             }else{
-                return redirect()->back();
+                $error = "Error:\nContrasena no coincide";
+                return view('Login.login')->with('error',$error);
                 //Retornar que la contrasena no coincide
             } 
         }
@@ -73,6 +78,7 @@ class LoginController extends Controller
 
     public function cerrarSesion(){
         Auth::logout();
+        Session::flush();
         return redirect('/');
     }
 }

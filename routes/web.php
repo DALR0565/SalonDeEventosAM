@@ -42,6 +42,8 @@ Route::post('validarusuario',[LoginController::class,'validarUsuario'])->name('v
 Route::get('cerrarSesion', [LoginController::class,'cerrarSesion'])->name('cerrarsesion')->middleware('web'); //Cambiar por auth
 
 
+
+
 //Rutas home
 /*Route::get('gerentes',function(){
     return view('Gerente.home');
@@ -99,13 +101,20 @@ Route::resource('servicios',ServicioController::class)->middleware('auth')->midd
 
 
 //RUTAS RECURSO DE CLIENTE - EVENTOS
-Route::resource('eventos',EventoController::class)->middleware('auth')->middleware('verificacioncliente');
+Route::resource('eventos',EventoController::class)->middleware('auth');
 ///////
 Route::get('confirmacion/{cual?}',[EventoController::class, 'confirmar'])->name('eventos.confirmar')->middleware('auth')->middleware('verificacioncliente');
 Route::get('pendiente/{cual?}',[EventoController::class, 'pendiente'])->name('eventos.pendiente')->middleware('auth')->middleware('verificacioncliente');
 
+
+Route::get('contrato/{cual?}',[EventoController::class,''])->name('contrato');
+
+
 //RUTAS DE EMPLEADO - ABONOS
-Route::resource('abonos',AbonoController::class);
+Route::resource('eventos.abonos',AbonoController::class)->middleware('auth');//Verificar que es un empleado
+Route::get('abonos',function(){
+    return view('abonos.index');
+})->name('abonos');
 
 //RUTAS DE GASTOS
 Route::resource('gastos',GastoController::class);

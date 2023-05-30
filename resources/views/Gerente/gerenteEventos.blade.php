@@ -88,8 +88,8 @@
         </thead>
         <tbody>
         
-        @foreach($eventos as $evento)         {{-- Recorremos los arreglos creados en el arreglo--}}
-            @if(!empty($evento))               {{-- Verificamos que el array no este vacio--}}
+        @foreach($eventos as $evento)        
+            @if(!empty($evento))               
             <tr>
                 <td>{{$evento->id}}</td>
                 <td>{{$evento->nombre}}</td>
@@ -105,7 +105,7 @@
                 
                 <td>{{$evento->detalles}}</td>
                 
-                <td>{{\App\Models\Paquete::find($evento->paquete_id)->nombre}}</td>
+                <td>{{$evento->paquetes->nombre}}</td>
 
                 <td>@foreach($evento->servicios as $servicio)
                     {{$servicio->nombre}}
@@ -113,7 +113,7 @@
                     @endforeach
                 </td>
                 
-                <td>{{(\App\Models\Cliente::find($evento->cliente_id))->nombres}}</td>
+                <td>{{$evento->clientes->nombres}}</td>
                 
                 <td><a href="{{route('eventos.edit', $evento->id)}}" class="btn">Actualizar</a>
                 <form action="{{route('eventos.destroy', $evento->id)}}" method="post">

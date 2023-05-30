@@ -4,13 +4,13 @@
     @method('PUT')
     @csrf
     <label for='nombre'>Nombre del servicio</label>
-    <input type='text' name='nombre' id='nombre' value="{{$servicio->nombre}}">
+    <input type='text' name='nombre' id='nombre' value="{{$servicio->nombre}}" required>
     <br>
     <label for='precio'>Precio</label>
-    <input type='text' name='precio' id='precio' value="{{$servicio->precio}}">
+    <input type='text' name='precio' id='precio' value="{{$servicio->precio}}" required>
     <br>
     <label for='detalles'>Detalles del servicio</label>
-    <textarea type='text' name='detalles' id='detalles' rows="10" cols="50">{{$servicio->detalles}}</textarea>
+    <textarea type='text' name='detalles' id='detalles' rows="10" cols="50" required>{{$servicio->detalles}}</textarea>
     <br>
     <input type="submit" value="ACTUALIZAR">
 </form>

@@ -18,7 +18,6 @@
 </body>
 
 <style>
-
 *{
             margin: 0;
             padding: 0;
@@ -30,7 +29,9 @@
   background-image: radial-gradient(circle at 50% -20.71%, #ffd1dc 0, #ffb6c1 6.25%, #ff9ba6 12.5%, #ff7e8c 18.75%, #ff5f73 25%, #ff3e5b 31.25%, #ff1c44 37.5%, #ff0031 43.75%, #e6002e 50%, #cc002a 56.25%, #b30027 62.5%, #990023 68.75%, #80001f 75%, #66001c 81.25%, #4c0018 93.5%, #330015 98.75%, #190011 100%);
 }
 
-
+.mensaje {
+    color: red; 
+  }
 
     form {
   margin: 20px auto;

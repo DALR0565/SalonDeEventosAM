@@ -5,13 +5,13 @@
     @csrf
     @method('PUT')
     <label for='nombre'>Nombre del paquete</label>
-    <input type='text' name='nombre' id='nombre' value="{{$paquete->nombre}}">
+    <input type='text' name='nombre' id='nombre' value="{{$paquete->nombre}}" required>
     <br>
     <label for='descripcion'>Descripcion</label>
-    <textarea type='text' name='descripcion' id='descripcion' rows="10" cols="50">{{$paquete->descripcion}}</textarea>
+    <textarea type='text' name='descripcion' id='descripcion' rows="10" cols="50" required>{{$paquete->descripcion}}</textarea>
     <br>
     <label for='precio'>Precio</label>
-    <input type='text' name='precio' id='precio' value="{{$paquete->precio}}">
+    <input type='text' name='precio' id='precio' value="{{$paquete->precio}}" required>
     <br>
     <input type="submit" value="Actualizar">
 </form>

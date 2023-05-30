@@ -25,8 +25,8 @@
                 <h4 class="text-light">Hola {{Auth::user()->nombres}}</h4>
             </div>
             <div class="menu">
-                <h3 class="d-block text-light p-3">Dashboard</h3>
-                <a href="{{route('abonos.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Abonos</a>
+                <h3 class="d-block text-light p-3">Empleado</h3>
+                <a href="{{route('abonos')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Abonos</a>
                 <a href="{{route('eventos.index')}}" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Eventos</a>
                 <a href="{{route('cerrarsesion')}}" class="d-block text-light p-3"><i class="icon ion-md-exit mr-2 lead"></i>Cerrar sesion</a>
             </div>

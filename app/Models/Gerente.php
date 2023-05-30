@@ -16,4 +16,8 @@ class Gerente extends Authenticatable
         return $this->hasMany('App\Models\Gasto');
     }
 
+    public function paquetes(){
+        return $this->hasMany('App\Models\Paquete');
+    }
+
 }

@@ -91,6 +91,11 @@ p {
                 <div class="form-group mx-5m-4 pt-3">
                     <a href="{{route('inicio')}}">Volver al inicio</a>
                 </div>
+                @if(isset($error))
+                <div class="alert alert-danger">
+                  {{$error}}
+                </div>
+                @endif
                 </div>
                 </form>
             </div>

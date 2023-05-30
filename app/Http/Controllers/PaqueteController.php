@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Paquete;
 use App\Http\Requests\StorePaqueteRequest;
 use App\Http\Requests\UpdatePaqueteRequest;
+use App\Models\Gerente;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PaqueteController extends Controller
@@ -86,6 +88,10 @@ class PaqueteController extends Controller
         $nombreDelArchivo = $archivo->getClientOriginalName();
         $imagen = Storage::disk('publico')->putFileAs('',$archivo,$nombreDelArchivo);
         $paquete->imagen = $imagen;
+        if(Auth::user() instanceof Gerente){
+            $paquete->gerente_id = Auth::user()->id;
+        }
+        
         $paquete->save();
         return redirect(route('paquetes.index'));
     }
